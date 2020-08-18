@@ -11,5 +11,6 @@
         "ecmaVersion": 11
     },
     "rules": {
+      "new-cap": 0
     }
 }
