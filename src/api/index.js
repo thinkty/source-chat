@@ -13,7 +13,11 @@ const { handleGraph } = require('./flowManager/index');
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-  res.sendStatus(200);
+  try {
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.post('/flow', (req, res, next) => {
