@@ -1,8 +1,8 @@
 const { createLogger, format, transports } = require('winston');
 
-const { combine, timestamp, printf } = format;
-const customFormat = printf(({ level, message, time }) => (
-  `${time} ${level}: ${message}`
+const { combine, printf } = format;
+const customFormat = printf(({ level, message, timestamp }) => (
+  `${timestamp} ${level}: ${message}`
 ));
 
 /**
@@ -14,7 +14,7 @@ const customFormat = printf(({ level, message, time }) => (
 const logger = createLogger({
   transports: [
     new transports.Console({
-      format: combine(timestamp(), customFormat),
+      format: combine(format.timestamp(), customFormat),
     }),
     new transports.File({
       level: 'error',
@@ -22,7 +22,7 @@ const logger = createLogger({
       handleExceptions: true,
       maxsize: 5242880, // 5MB
       colorize: true,
-      format: combine(timestamp(), customFormat),
+      format: combine(format.timestamp(), customFormat),
     }),
     new transports.File({
       level: 'info',
@@ -30,7 +30,7 @@ const logger = createLogger({
       handleExceptions: false,
       maxsize: 5242880,
       colorize: true,
-      format: combine(timestamp(), customFormat),
+      format: combine(format.timestamp(), customFormat),
     }),
   ],
   exitOnError: false,
