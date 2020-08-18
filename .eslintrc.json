@@ -11,6 +11,7 @@
         "ecmaVersion": 11
     },
     "rules": {
-      "no-unused-vars": 0
+      "no-unused-vars": 0,
+      "no-throw-literal": 0
     }
 }
