@@ -1,13 +1,13 @@
 const { createLogger, format, transports } = require('winston');
-const { combine, timestamp, label, printf } = format;
 
-const customFormat = printf(({ level, message, timestamp }) => {
-  return `${timestamp} ${level}: ${message}`;
-});
+const { combine, timestamp, printf } = format;
+const customFormat = printf(({ level, message, time }) => (
+  `${time} ${level}: ${message}`
+));
 
 /**
  * Create a winston logger object that saves logs to 'error.log', 'info.log' and
- * also to the console. Each message is formatted by  
+ * also to the console. Each message is formatted with a custom format
  *
  * @see https://stackoverflow.com/questions/27906551/node-js-logging-use-morgan-and-winston/28824464
  */
