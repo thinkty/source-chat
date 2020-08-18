@@ -20,7 +20,6 @@ const router = require('./api/index');
 const port = process.env.PORT || 8080;
 const app = express();
 
-app.use('/', router);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan('common', {
@@ -34,5 +33,6 @@ app.use((err, req, res, next) => {
   logger.error(err);
   res.status(500).send(err);
 });
+app.use('/', router);
 
 app.listen(port, logger.info(`Listening on port: ${port}`));
