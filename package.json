@@ -20,6 +20,7 @@
   "homepage": "https://github.com/thinkty/dialogflow-editor-server",
   "dependencies": {
     "express": "^4.17.1",
+    "morgan": "^1.10.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
