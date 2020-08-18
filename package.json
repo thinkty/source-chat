@@ -1,0 +1,19 @@
+{
+  "name": "dialogflow-editor-server",
+  "version": "1.0.0",
+  "description": "A template server for managing intents on Dialogflow using the Dialogflow Editor and also serving as a chatbot for various chat application platforms",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thinkty/dialogflow-editor-server.git"
+  },
+  "author": "Tae Yoon Kim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thinkty/dialogflow-editor-server/issues"
+  },
+  "homepage": "https://github.com/thinkty/dialogflow-editor-server#readme"
+}
