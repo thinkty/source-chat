@@ -5,6 +5,7 @@
  * - morgan: log HTTP requests to the server
  * - cors: enable CORS mechanism for all origin
  * - body parser: parse request body
+ * - error handling middleware to send status 500
  *
  * In addition to the middlewares, setup the route with the Router from the APIs
  */
@@ -15,9 +16,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('./utils/logger');
 const router = require('./api/index');
+
 const port = process.env.PORT || 8080;
 const app = express();
 
+app.use('/', router);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan('common', {
@@ -27,7 +30,9 @@ app.use(morgan('common', {
     },
   },
 }));
-
-app.use('/', router);
+app.use((err, req, res, next) => {
+  logger.error(err);
+  res.status(500).send(err);
+});
 
 app.listen(port, logger.info(`Listening on port: ${port}`));
