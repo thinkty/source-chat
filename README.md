@@ -20,5 +20,11 @@ The process above is an extremely abstract version of the single session between
 The layout above does not include the interaction between the [Dialogflow Editor](https://github.com/thinkty/dialogflow-editor) and the server as that is a different process.
 In conclusion, this project is aimed to provide a modular server that can handle multiple platforms at once.
 
+## Installation
+TBA
+
+## Plans
+TBA
+
 ## License
 MIT
