@@ -1,28 +1,36 @@
-const winston = require('winston');
+const { createLogger, format, transports } = require('winston');
+const { combine, timestamp, label, printf } = format;
+
+const customFormat = printf(({ level, message, timestamp }) => {
+  return `${timestamp} ${level}: ${message}`;
+});
 
 /**
- * Create a winston logger object that saves logs to 'error.log' and 'info.log'.
+ * Create a winston logger object that saves logs to 'error.log', 'info.log' and
+ * also to the console. Each message is formatted by  
  *
  * @see https://stackoverflow.com/questions/27906551/node-js-logging-use-morgan-and-winston/28824464
  */
-const logger = new winston.createLogger({
-  level: 'info',
+const logger = createLogger({
   transports: [
-    new winston.transports.File({
+    new transports.Console({
+      format: combine(timestamp(), customFormat),
+    }),
+    new transports.File({
       level: 'error',
       filename: './logs/error.log',
       handleExceptions: true,
-      json: true,
       maxsize: 5242880, // 5MB
       colorize: true,
+      format: combine(timestamp(), customFormat),
     }),
-    new winston.transports.File({
+    new transports.File({
       level: 'info',
       filename: './logs/info.log',
       handleExceptions: false,
-      json: true,
       maxsize: 5242880,
       colorize: true,
+      format: combine(timestamp(), customFormat),
     }),
   ],
   exitOnError: false,
