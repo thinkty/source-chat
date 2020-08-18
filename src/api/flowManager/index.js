@@ -1,5 +1,7 @@
 const logger = require('../../utils/logger');
 const { validate } = require('./validator');
+const { parse } = require('./parser');
+const { update } = require('./updater');
 
 /**
  * This function handles updating Dialogflow and the state transition table. The
@@ -21,7 +23,11 @@ function handleGraph(req, res) {
   validate(graph);
 
   // Step 2
+  const intents = parse(graph);
+
   // Step 3
+  update(intents);
+
   res.sendStatus(200);
 }
 
