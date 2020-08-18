@@ -4,7 +4,9 @@
   "description": "A template server for managing intents on Dialogflow using the Dialogflow Editor and also serving as a chatbot for various chat application platforms",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/eslint src/",
+    "lint:fix": "./node_modules/.bin/eslint --fix src/"
   },
   "repository": {
     "type": "git",
