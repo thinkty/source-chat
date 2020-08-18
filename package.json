@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/thinkty/dialogflow-editor-server/issues"
   },
-  "homepage": "https://github.com/thinkty/dialogflow-editor-server"
+  "homepage": "https://github.com/thinkty/dialogflow-editor-server",
+  "dependencies": {
+    "express": "^4.17.1",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0"
+  }
 }
