@@ -4,6 +4,7 @@
   "description": "A template server for managing intents on Dialogflow using the Dialogflow Editor and also serving as a chatbot for various chat application platforms",
   "main": "index.js",
   "scripts": {
+    "start": "./node_modules/.bin/nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "./node_modules/.bin/eslint src/",
     "lint:fix": "./node_modules/.bin/eslint --fix src/"
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/thinkty/dialogflow-editor-server",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "winston": "^3.3.3"
@@ -26,6 +28,7 @@
   "devDependencies": {
     "eslint": "^7.7.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.22.0"
+    "eslint-plugin-import": "^2.22.0",
+    "nodemon": "^2.0.4"
   }
 }
