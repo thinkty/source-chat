@@ -33,20 +33,20 @@ function formatTrainingPhrases(trainingPhrases) {
 
   return trainingPhrases.map((phrase) => new TrainingPhrase({
     name: phrase,
-    type: "EXAMPLE",
+    type: 'EXAMPLE',
   }));
 }
 
 /**
  * Helper function to format the responses for the intent. Currently, the editor
  * only takes text responses.
- * 
- * @param {object[]} responses Multiple lists of responses to send to the user
+ *
+ * @param {object[]} responses Multiple pools of responses to send to the user
  */
 function formatResponses(responses) {
   const { Message } = protos.google.cloud.dialogflow.v2.Intent;
 
-  return responses.map(pool => new Message({ text: { text: pool } }));
+  return responses.map((pool) => new Message({ text: { text: pool } }));
 }
 
 /**
@@ -57,7 +57,6 @@ function formatResponses(responses) {
  * name of the intent
  * - contexts : contains input and output contexts
  * - events : a list of events that can trigger the intent
- * - 
  *
  * @see https://googleapis.dev/nodejs/dialogflow/latest/google.cloud.dialogflow.v2.IIntent.html
  * @param {object[]} intentNodes
@@ -81,7 +80,7 @@ function parse(intentNodes, flowchart) {
 
     return new Intent({
       displayName: `${flowchart}-${title}`,
-      webhookState: fulfillment ? "WEBHOOK_STATE_ENABLED" : null,
+      webhookState: fulfillment ? 'WEBHOOK_STATE_ENABLED' : null,
       isFallback: isFallback || (trainingPhrases.length === 0 && events.length === 0),
       inputContextNames: contexts.in,
       events,
