@@ -23,7 +23,7 @@ function handleGraph(req, res) {
   const { intentNodes, contextNodes } = validate(graph);
 
   // Step 2
-  const intents = parse(intentNodes, contextNodes);
+  const intents = parse(intentNodes, flowchart);
 
   // Step 3
   update(intents);
