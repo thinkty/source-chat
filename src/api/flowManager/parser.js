@@ -55,8 +55,15 @@ function formatResponses(responses) {
  * properties are parsed:
  * - title : combined with the name of the flowchart, it will be the display
  * name of the intent
+ * - fulfillment : whether the intent should call the webhook
+ * - isFallback : an intent is considered a fallback node when it is explicitly
+ * stated that it is a fallback node or when there are no training phrases and
+ * events. This means that the intent takes any input in the given context.
  * - contexts : contains input and output contexts
  * - events : a list of events that can trigger the intent
+ * - training phrases : an array of strings for the intent to use it to train
+ * - action : a helpful message for the webhook on fulfillment
+ * - responses : list of pools of responses to send to the user
  *
  * @see https://googleapis.dev/nodejs/dialogflow/latest/google.cloud.dialogflow.v2.IIntent.html
  * @param {object[]} intentNodes
