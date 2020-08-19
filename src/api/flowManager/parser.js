@@ -1,15 +1,17 @@
 const { Intent } = require('@google-cloud/dialogflow').protos.google.cloud.dialogflow.v2;
 
 /**
- * This function parses the intents from the graph and returns it.
+ * This function parses the intents from the intent nodes and the context nodes
+ * and returns a batch of intents
  *
- * @param graph Graph object
+ * @param {Object[]} intentNodes
+ * @param {Object[]} contextNodes
  * @returns {import("@google-cloud/dialogflow").protos.google.cloud.dialogflow.v2.Intent[]}
  * An array of intents
  */
-function parse(graph) {
-  const intent = new Intent({});
-  
+function parse(intentNodes, contextNodes) {
+  console.log(intentNodes);
+  console.log(contextNodes);
 }
 
 module.exports = { parse };
