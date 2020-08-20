@@ -5,8 +5,9 @@ const { IntentsClient } = require('@google-cloud/dialogflow');
  * transition table with the latest intents
  *
  * @param {import("@google-cloud/dialogflow").protos.google.cloud.dialogflow.v2.Intent[]} intents
+ * @param {string} agent Name of the agent
  */
-function update(intents) {
+function update(intents, agent) {
   const client = new IntentsClient({});
 }
 
