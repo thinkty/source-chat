@@ -10,6 +10,7 @@
  * In addition to the middlewares, setup the route with the Router from the APIs
  */
 
+require('dotenv').config();
 const cors = require('cors');
 const morgan = require('morgan');
 const express = require('express');
