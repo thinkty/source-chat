@@ -26,7 +26,7 @@ function handleGraph(req, res) {
   const intents = parse(intentNodes, contextNodes, flowchart);
 
   // Step 3
-  update(intents, agent);
+  update(intents);
 
   res.sendStatus(200);
 }
