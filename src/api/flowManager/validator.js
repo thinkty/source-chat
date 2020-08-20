@@ -53,20 +53,17 @@ function validate(graph) {
   hasNoDanglingNodes(nodes, edges);
 
   const intentNodes = [];
-  const contextNodes = [];
   nodes.forEach((node) => {
     const { type } = node;
 
     if (type === INTENT_TYPE) {
       intentNodes.push(node);
-    } else if (type === CONTEXT_TYPE) {
-      contextNodes.push(node);
-    } else {
+    } else if (type !== CONTEXT_TYPE) {
       throw `Unrecognized node type: ${type}`;
     }
   });
 
-  return { intentNodes, contextNodes };
+  return { intentNodes };
 }
 
 module.exports = { validate };
