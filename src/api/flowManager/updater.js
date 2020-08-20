@@ -5,7 +5,7 @@ const { IntentsClient } = require('@google-cloud/dialogflow');
  * the new intents can be updated without causing the issue of duplicate names
  *
  * @param {string} projectId
- * @param {import("@google-cloud/dialogflow").v2.IntentsClient} client 
+ * @param {import("@google-cloud/dialogflow").v2.IntentsClient} client
  */
 async function removePreviousIntents(projectId, client) {
   const parent = `projects/${projectId}/agent`;
@@ -18,13 +18,13 @@ async function removePreviousIntents(projectId, client) {
  * Helper function to send the new intents to Dialogflow
  *
  * @param {string} projectId
- * @param {import("@google-cloud/dialogflow").v2.IntentsClient} client 
- * @param {import("@google-cloud/dialogflow").protos.google.cloud.dialogflow.v2.Intent[]} intents 
+ * @param {import("@google-cloud/dialogflow").v2.IntentsClient} client
+ * @param {import("@google-cloud/dialogflow").protos.google.cloud.dialogflow.v2.Intent[]} intents
  */
 async function updateNewIntents(projectId, client, intents) {
   const parent = `projects/${projectId}/agent`;
   await client.batchUpdateIntents({
-    parent, 
+    parent,
     intentBatchInline: { intents },
   });
 }
