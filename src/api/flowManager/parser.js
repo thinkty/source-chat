@@ -10,12 +10,14 @@ const { protos } = require('@google-cloud/dialogflow');
  * @see https://googleapis.dev/nodejs/dialogflow/latest/google.cloud.dialogflow.v2.IIntent.html
  * @see https://googleapis.dev/nodejs/dialogflow/latest/google.cloud.dialogflow.v2.IContext.html
  * @param {string[]} outputContexts
+ * @param {Map<string, string>} contextMap Map with key of context node id and
+ * value of context node title
  */
-function formatOutputContexts(outputContexts) {
+function formatOutputContexts(outputContexts, contextMap) {
   const { Context } = protos.google.cloud.dialogflow.v2;
 
-  return outputContexts.map((name) => new Context({
-    name,
+  return outputContexts.map((id) => new Context({
+    name: contextMap.get(id),
     lifespanCount: 1,
     parameters: null,
   }));
@@ -67,10 +69,19 @@ function formatResponses(responses) {
  *
  * @see https://googleapis.dev/nodejs/dialogflow/latest/google.cloud.dialogflow.v2.IIntent.html
  * @param {object[]} intentNodes
+ * @param {object[]} contextNodes
  * @param {string} flowchart Name of the flowchart
  * An array of intents
  */
-function parse(intentNodes, flowchart) {
+function parse(intentNodes, contextNodes, flowchart) {
+  // Iterate through the context nodes and form a map with the key being the id
+  // and the value being the title with the flowchart name prepended
+  const contextMap = new Map();
+  contextNodes.forEach((node) => {
+    const { id, title } = node;
+    contextMap.set(id, `${flowchart}-${title}`);
+  });
+
   const { Intent } = protos.google.cloud.dialogflow.v2;
 
   return intentNodes.map((node) => {
@@ -89,11 +100,11 @@ function parse(intentNodes, flowchart) {
       displayName: `${flowchart}-${title}`,
       webhookState: fulfillment ? 'WEBHOOK_STATE_ENABLED' : null,
       isFallback: isFallback || (trainingPhrases.length === 0 && events.length === 0),
-      inputContextNames: contexts.in,
+      inputContextNames: contexts.in.map((id) => contextMap.get(id)),
       events,
       trainingPhrases: formatTrainingPhrases(trainingPhrases),
       action,
-      outputContexts: formatOutputContexts(contexts.out),
+      outputContexts: formatOutputContexts(contexts.out, contextMap),
       messages: formatResponses(responses),
     });
   });

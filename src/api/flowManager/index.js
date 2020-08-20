@@ -20,10 +20,10 @@ function handleGraph(req, res) {
   logger.info(`Received graph for ${agent}/${flowchart}`);
 
   // Step 1
-  const { intentNodes } = validate(graph);
+  const { intentNodes, contextNodes } = validate(graph);
 
   // Step 2
-  const intents = parse(intentNodes, flowchart);
+  const intents = parse(intentNodes, contextNodes, flowchart);
 
   // Step 3
   update(intents, agent);
