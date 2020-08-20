@@ -29,9 +29,9 @@ router.get('/error', (req, res, next) => {
   }
 });
 
-router.post('/flow', (req, res, next) => {
+router.post('/flow', async (req, res, next) => {
   try {
-    handleGraph(req, res);
+    await handleGraph(req, res);
   } catch (error) {
     next(error);
   }

@@ -13,7 +13,7 @@ const { update } = require('./updater');
  * @param {import("express").Request} req Request from the editor
  * @param {import("express").Response} res Express response object
  */
-function handleGraph(req, res) {
+async function handleGraph(req, res) {
   const { body } = req;
   const { agent, flowchart, graph } = body;
 
@@ -26,7 +26,7 @@ function handleGraph(req, res) {
   const intents = parse(intentNodes, contextNodes, flowchart);
 
   // Step 3
-  update(intents);
+  await update(intents);
 
   res.sendStatus(200);
 }
