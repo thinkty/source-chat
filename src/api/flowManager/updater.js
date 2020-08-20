@@ -39,7 +39,7 @@ async function updateNewIntents(projectId, client, intents) {
  */
 async function update(intents) {
   const clientEmail = process.env.DIALOGFLOW_CLIENT_EMAIL;
-  const privateKey = process.env.DIALOGFLOW_PRIVATE_KEY;
+  const privateKey = process.env.DIALOGFLOW_PRIVATE_KEY.replace(/\\n/g, '\n');
   const projectId = process.env.DIALOGFLOW_PROJECT_ID;
 
   const client = new IntentsClient({
