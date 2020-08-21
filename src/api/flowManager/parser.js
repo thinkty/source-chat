@@ -2,7 +2,7 @@ const { protos } = require('@google-cloud/dialogflow');
 const { v4: uuidv4 } = require('uuid');
 
 /**
- * Helper function to format the context. The format: 
+ * Helper function to format the context. The format:
  * projects/{project_id}/agent/sessions/{session_id}/contexts/{context_id}
  *
  * @param {string} context Raw context value
@@ -21,19 +21,48 @@ function formatContextName(context) {
  * take care of the flow. Instead of giving the flow control to Dialogflow, by
  * having your own flow control logic, you can implement loops and complex
  * patterns in your graph.
+ * However, there are special cases. When
+ * 1. The node is a fallback node or events are given, and does not have any
+ * output contexts specified, the output context will be the input context
+ * 2. The node is not a fallback node and no events are given, and it does not
+ * have any output context specified, the output context will be the root
  *
  * @see https://googleapis.dev/nodejs/dialogflow/latest/google.cloud.dialogflow.v2.IIntent.html
  * @see https://googleapis.dev/nodejs/dialogflow/latest/google.cloud.dialogflow.v2.IContext.html
+ * @param {object} node Node object containing events and fallback information
  * @param {string[]} outputContexts
  * @param {Map<string, string>} contextMap Map with key of context node id and
  * value of context node title
  */
-function formatOutputContexts(outputContexts, contextMap) {
+function formatOutputContexts(node, outputContexts, contextMap) {
   const { Context } = protos.google.cloud.dialogflow.v2;
+  const { isFallback, events } = node;
+
+  if (outputContexts.length === 0) {
+    // Exceptional case 1
+    if (isFallback || events.length > 0) {
+      const { contexts } = node;
+      return contexts.in.map((id) => (
+        new Context({
+          name: formatContextName(contextMap.get(id)),
+          lifespanCount: 1,
+          parameters: null,
+        })
+      ));
+    }
+
+    // Exceptional case 2
+    return [
+      new Context({
+        name: formatContextName('root'),
+        lifespanCount: 1,
+        parameters: null,
+      }),
+    ];
+  }
 
   return outputContexts.map((id) => new Context({
     name: formatContextName(contextMap.get(id)),
-    // name: `projects/${projectId}/agent/sessions/${session}/contexts/${contextMap.get(id)}`,
     lifespanCount: 1,
     parameters: null,
   }));
@@ -54,7 +83,7 @@ function formatTrainingPhrases(trainingPhrases) {
     // When adding support for entities, edit this part to partition the phrase
     // into multiple parts
     const part = new Part({
-      text: phrase
+      text: phrase,
     });
 
     return new TrainingPhrase({
