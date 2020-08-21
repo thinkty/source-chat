@@ -94,7 +94,7 @@ function formatResponses(responses) {
  * @see https://googleapis.dev/nodejs/dialogflow/latest/google.cloud.dialogflow.v2.IIntent.html
  * @param {object[]} intentNodes
  * @param {object[]} contextNodes
- * An array of intents
+ * @returns An array of intents
  */
 function parse(intentNodes, contextNodes) {
   // Iterate through the context nodes and form a map with the key being the id
