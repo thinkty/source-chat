@@ -156,7 +156,7 @@ function parse(intentNodes, contextNodes) {
       events,
       trainingPhrases: formatTrainingPhrases(trainingPhrases),
       action,
-      outputContexts: formatOutputContexts(contexts.out, contextMap),
+      outputContexts: formatOutputContexts(node, contexts.out, contextMap),
       messages: formatResponses(responses),
     });
   });
