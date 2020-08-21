@@ -32,7 +32,11 @@ app.use(morgan('common', {
 }));
 app.use((err, req, res, next) => {
   logger.error(err);
-  res.status(500).send(err);
+  if (typeof err === 'string') {
+    res.status(500).send(err);
+  } else {
+    res.sendStatus(500);
+  }
 });
 app.use('/', router);
 
