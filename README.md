@@ -5,8 +5,8 @@ A template server for managing intents on Dialogflow using the [Dialogflow Edito
 
 ## System Layout
 The system layout can be divided into two functional parts:
-- Editor
 
+### Editor
 The editor segment handles the interaction between the Dialogflow Editor and the server. When a user exports the graph from the Dialogflow Editor to an instance of this server, intents will be parsed from the graph data and be sent to Dialogflow. After Dialogflow is successfully updated, the server will update its own state transition table.
 ![system layout for editor](https://imgur.com/YYkyeWJ.png)
 1. The end user will edit the graph using the Dialogflow Editor tool
@@ -17,11 +17,9 @@ The editor segment handles the interaction between the Dialogflow Editor and the
 6. If any error is detected during the process, Dialogflow will send the reason
 7. If the process was successful, a 200 OK will be sent back to the client
 
-- Chatbot
-
+### Chatbot
 The chatbot segment handles the interaction between the message platform such as Slack, Discord, or Facebook Messenger and the server.
 ![system layout for chatbot](https://imgur.com/Q5CzUr1.png)
-
 1. The end user is the person communicating with the chatbot
 2. The end user sends a message on the platform (Slack, Discord, or Facebook Messenger)
 3. The platform then adds additional payloads such as user identifier, the message, and more depending on the platform
