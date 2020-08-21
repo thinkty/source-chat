@@ -1,5 +1,6 @@
 const INTENT_TYPE = 'intentNode';
 const CONTEXT_TYPE = 'contextNode';
+const expectedNodeTypes = [INTENT_TYPE, CONTEXT_TYPE];
 
 /**
  * Check whether the graph has valid nodes and edges. The graph must have
@@ -58,7 +59,7 @@ function validTopContextNode(nodes, edges) {
   }
 
   // Get the node that is not in the set = top node
-  for (let i = 0; i < nodes.length; i++) {
+  for (let i = 0; i < nodes.length; i += 1) {
     const node = nodes[i];
     const { id } = node;
 
@@ -70,6 +71,47 @@ function validTopContextNode(nodes, edges) {
       break;
     }
   }
+}
+
+/**
+ * Function to check every node has the expected node type defined above
+ *
+ * @param {object[]} nodes
+ */
+function validNodeTypes(nodes) {
+  nodes.forEach((node) => {
+    const { type } = node;
+    if (!expectedNodeTypes.includes(type)) {
+      throw `Found unexpected node type: ${type}`;
+    }
+  });
+}
+
+/**
+ * Function to make sure there are no duplicate names among same type of nodes.
+ *
+ * @param {object[]} nodes
+ */
+function noDuplicateNames(nodes) {
+  const visitedContextNodes = new Set();
+  const visitedIntentNodes = new Set();
+
+  nodes.forEach((node) => {
+    const { title, type } = node;
+    if (type === CONTEXT_TYPE) {
+      if (visitedContextNodes.has(title)) {
+        throw `Found duplicate name: ${title}`;
+      }
+      visitedContextNodes.add(title);
+    } else if (type === INTENT_TYPE) {
+      if (visitedIntentNodes.has(title)) {
+        throw `Found duplicate name: ${title}`;
+      }
+      visitedIntentNodes.add(title);
+    } else {
+      throw `Unexpected node type: ${type} with title: ${title}`;
+    }
+  });
 }
 
 /**
@@ -86,6 +128,8 @@ function validate(graph) {
   validNodesAndEdges(nodes, edges);
   hasNoDanglingNodes(nodes, edges);
   validTopContextNode(nodes, edges);
+  validNodeTypes(nodes);
+  noDuplicateNames(nodes);
 
   const intentNodes = [];
   const contextNodes = [];
