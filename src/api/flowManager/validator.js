@@ -34,7 +34,7 @@ function hasNoDanglingNodes(nodes, edges) {
   });
 
   if (nodes.length - nonTopNodes.size > 1) {
-    throw 'Detected dangling nodes';
+    throw 'Detected dangling nodes or multiple top nodes';
   }
 }
 
