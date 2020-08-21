@@ -1,4 +1,21 @@
 const { protos } = require('@google-cloud/dialogflow');
+const { v4: uuidv4 } = require('uuid');
+
+/**
+ * Helper function to format the context. The format: 
+ * projects/{project_id}/agent/sessions/{session_id}/contexts/{context_id}
+ *
+ * @param {Map<string, string>} contextMap Map with key of context node id and
+ * value of context node title
+ * @param {string} id Context node id
+ * @returns {string} Formatted context value
+ */
+function formatContext(id, contextMap) {
+  const projectId = process.env.DIALOGFLOW_PROJECT_ID;
+  const session = uuidv4();
+
+  return `projects/${projectId}/agent/sessions/${session}/contexts/${contextMap.get(id)}`;
+}
 
 /**
  * Helper function to format the output contexts according to the guideline by
@@ -14,10 +31,13 @@ const { protos } = require('@google-cloud/dialogflow');
  * value of context node title
  */
 function formatOutputContexts(outputContexts, contextMap) {
+  const projectId = process.env.DIALOGFLOW_PROJECT_ID;
+  const session = uuidv4();
   const { Context } = protos.google.cloud.dialogflow.v2;
 
   return outputContexts.map((id) => new Context({
     name: contextMap.get(id),
+    // name: `projects/${projectId}/agent/sessions/${session}/contexts/${contextMap.get(id)}`,
     lifespanCount: 1,
     parameters: null,
   }));
@@ -100,7 +120,7 @@ function parse(intentNodes, contextNodes, flowchart) {
       displayName: `${flowchart}-${title}`,
       webhookState: fulfillment ? 'WEBHOOK_STATE_ENABLED' : null,
       isFallback: isFallback || (trainingPhrases.length === 0 && events.length === 0),
-      inputContextNames: contexts.in.map((id) => contextMap.get(id)),
+      inputContextNames: contexts.in.map((id) => formatContext(id, contextMap)),
       events,
       trainingPhrases: formatTrainingPhrases(trainingPhrases),
       action,
