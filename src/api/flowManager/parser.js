@@ -5,16 +5,14 @@ const { v4: uuidv4 } = require('uuid');
  * Helper function to format the context. The format: 
  * projects/{project_id}/agent/sessions/{session_id}/contexts/{context_id}
  *
- * @param {Map<string, string>} contextMap Map with key of context node id and
- * value of context node title
- * @param {string} id Context node id
+ * @param {string} context Raw context value
  * @returns {string} Formatted context value
  */
-function formatContext(id, contextMap) {
+function formatContextName(context) {
   const projectId = process.env.DIALOGFLOW_PROJECT_ID;
   const session = uuidv4();
 
-  return `projects/${projectId}/agent/sessions/${session}/contexts/${contextMap.get(id)}`;
+  return `projects/${projectId}/agent/sessions/${session}/contexts/${context}`;
 }
 
 /**
@@ -31,12 +29,10 @@ function formatContext(id, contextMap) {
  * value of context node title
  */
 function formatOutputContexts(outputContexts, contextMap) {
-  const projectId = process.env.DIALOGFLOW_PROJECT_ID;
-  const session = uuidv4();
   const { Context } = protos.google.cloud.dialogflow.v2;
 
   return outputContexts.map((id) => new Context({
-    name: contextMap.get(id),
+    name: formatContextName(contextMap.get(id)),
     // name: `projects/${projectId}/agent/sessions/${session}/contexts/${contextMap.get(id)}`,
     lifespanCount: 1,
     parameters: null,
@@ -45,18 +41,27 @@ function formatOutputContexts(outputContexts, contextMap) {
 
 /**
  * Helper function to format the training phrases for the intent. Currently,
- * there is no support for entities yet so the training phrase parts are not
- * filled in.
+ * there is no support for entities yet so the training phrase only has a single
+ * part
  *
  * @param {string[]} trainingPhrases List of training phrases for the intent
  */
 function formatTrainingPhrases(trainingPhrases) {
   const { TrainingPhrase } = protos.google.cloud.dialogflow.v2.Intent;
+  const { Part } = protos.google.cloud.dialogflow.v2.Intent.TrainingPhrase;
 
-  return trainingPhrases.map((phrase) => new TrainingPhrase({
-    name: phrase,
-    type: 'EXAMPLE',
-  }));
+  return trainingPhrases.map((phrase) => {
+    // When adding support for entities, edit this part to partition the phrase
+    // into multiple parts
+    const part = new Part({
+      text: phrase
+    });
+
+    return new TrainingPhrase({
+      type: 'EXAMPLE',
+      parts: [part],
+    });
+  });
 }
 
 /**
@@ -75,8 +80,7 @@ function formatResponses(responses) {
  * This function parses the intents from the intent nodes and the context nodes
  * and returns a batch of intents. From the intent node, the following list of
  * properties are parsed:
- * - title : combined with the name of the flowchart, it will be the display
- * name of the intent
+ * - title : Display name of the intent
  * - fulfillment : whether the intent should call the webhook
  * - isFallback : an intent is considered a fallback node when it is explicitly
  * stated that it is a fallback node or when there are no training phrases and
@@ -90,16 +94,15 @@ function formatResponses(responses) {
  * @see https://googleapis.dev/nodejs/dialogflow/latest/google.cloud.dialogflow.v2.IIntent.html
  * @param {object[]} intentNodes
  * @param {object[]} contextNodes
- * @param {string} flowchart Name of the flowchart
  * An array of intents
  */
-function parse(intentNodes, contextNodes, flowchart) {
+function parse(intentNodes, contextNodes) {
   // Iterate through the context nodes and form a map with the key being the id
-  // and the value being the title with the flowchart name prepended
+  // and the value being the title
   const contextMap = new Map();
   contextNodes.forEach((node) => {
     const { id, title } = node;
-    contextMap.set(id, `${flowchart}-${title}`);
+    contextMap.set(id, title);
   });
 
   const { Intent } = protos.google.cloud.dialogflow.v2;
@@ -117,10 +120,10 @@ function parse(intentNodes, contextNodes, flowchart) {
     } = node;
 
     return new Intent({
-      displayName: `${flowchart}-${title}`,
+      displayName: title,
       webhookState: fulfillment ? 'WEBHOOK_STATE_ENABLED' : null,
       isFallback: isFallback || (trainingPhrases.length === 0 && events.length === 0),
-      inputContextNames: contexts.in.map((id) => formatContext(id, contextMap)),
+      inputContextNames: contexts.in.map((id) => formatContextName(contextMap.get(id))),
       events,
       trainingPhrases: formatTrainingPhrases(trainingPhrases),
       action,
