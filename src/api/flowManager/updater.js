@@ -12,7 +12,9 @@ async function removePreviousIntents(projectId, client) {
   const result = await client.listIntents({ parent });
   const intents = result[0];
 
-  await client.batchDeleteIntents({ parent, intents });
+  if (intents.length > 0) {
+    await client.batchDeleteIntents({ parent, intents });
+  }
 }
 
 /**
@@ -52,7 +54,7 @@ async function update(intents) {
   });
 
   await removePreviousIntents(projectId, client);
-  //await updateNewIntents(projectId, client, intents);
+  await updateNewIntents(projectId, client, intents);
 }
 
 module.exports = { update };
