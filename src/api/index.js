@@ -23,14 +23,6 @@ router.get('/', (req, res, next) => {
   }
 });
 
-router.get('/error', (req, res, next) => {
-  try {
-    throw 'Testing error handling on server';
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.post('/flow', async (req, res, next) => {
   try {
     await handleGraph(req, res);

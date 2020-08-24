@@ -13,12 +13,6 @@ describe('GET endpoints', () => {
     expect(res.status).toEqual(200);
   });
 
-  it('/error : should throw error', async () => {
-    const res = await request(app).get('/error');
-    expect(res.status).toEqual(500);
-    expect(res.text).toContain('Testing error handling on server');
-  });
-
   it('/flow : should update state table', async () => {
     const res = await request(app).get('/flow');
     expect(res.status).toEqual(200);
@@ -30,8 +24,16 @@ describe('GET endpoints', () => {
 });
 
 describe('POST endpoints', () => {
+  const app = express();
+  app.use(router);
+  const server = app.listen();
+
   it('Sample test', () => {
     request
     expect(true).toBe(true);
   }); 
+
+  afterAll((done) => {
+    server.close();
+  });
 });
