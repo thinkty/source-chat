@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/.bin/nodemon src/app.js",
-    "test": "./node_modules/.bin/jest",
-    "test:cov": "./node_modules/.bin/jest --coverage",
-    "test:watch": "./node_modules/.bin/jest --watch",
-    "test:watchall": "./node_modules/.bin/jest --watchAll",
+    "test": "NODE_ENV=debug ./node_modules/.bin/jest",
+    "test:cov": "NODE_ENV=debug ./node_modules/.bin/jest --coverage",
+    "test:watch": "NODE_ENV=debug ./node_modules/.bin/jest --watch",
+    "test:watchall": "NODE_ENV=debug ./node_modules/.bin/jest --watchAll",
     "lint": "./node_modules/.bin/eslint src/",
     "lint:fix": "./node_modules/.bin/eslint --fix src/"
   },
