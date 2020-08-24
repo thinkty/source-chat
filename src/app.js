@@ -15,6 +15,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const logger = require('./utils/logger');
 const router = require('./api/index');
 
@@ -39,5 +40,16 @@ app.use((err, req, res, next) => {
   }
 });
 app.use('/', router);
+
+mongoose.connect(process.env.DATABASE_URL, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: true,
+});
+
+mongoose.connection.once('open', () => { logger.info(`MongoDB connection open`); });
+mongoose.connection.on('error', () => { logger.error('MongoDB error'); });
+mongoose.connection.on('disconnected', () => { logger.info(`MongoDB disconnected`); });
 
 app.listen(port, logger.info(`Listening on port: ${port}`));
