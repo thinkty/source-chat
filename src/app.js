@@ -8,6 +8,7 @@
  * - error handling middleware to send status 500
  *
  * In addition to the middlewares, setup the route with the Router from the APIs
+ * and also connect to the database with the given url
  */
 
 require('dotenv').config();
