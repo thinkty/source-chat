@@ -40,9 +40,10 @@ async function updateNewIntents(projectId, client, intents) {
  * @param {import("@google-cloud/dialogflow").protos.google.cloud.dialogflow.v2.Intent[]} intents
  */
 async function update(intents) {
-  const clientEmail = process.env.DIALOGFLOW_CLIENT_EMAIL;
-  const privateKey = process.env.DIALOGFLOW_PRIVATE_KEY.replace(/\\n/g, '\n');
-  const projectId = process.env.DIALOGFLOW_PROJECT_ID;
+  const env = process.env.NODE_ENV;
+  const clientEmail = env === 'debug' ? process.env.DEBUG_DIALOGFLOW_CLIENT_EMAIL : process.env.DIALOGFLOW_CLIENT_EMAIL;
+  const privateKey = (env === 'debug' ? process.env.DEBUG_DIALOGFLOW_PRIVATE_KEY : process.env.DIALOGFLOW_PRIVATE_KEY).replace(/\\n/g, '\n');
+  const projectId = env === 'debug' ? process.env.DEBUG_DIALOGFLOW_PROJECT_ID : process.env.DIALOGFLOW_PROJECT_ID;
 
   const client = new IntentsClient({
     credentials: {
