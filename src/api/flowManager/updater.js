@@ -25,9 +25,8 @@ async function removePreviousIntents(projectId, client) {
  * @param {import("@google-cloud/dialogflow").protos.google.cloud.dialogflow.v2.Intent[]} intents
  */
 async function updateNewIntents(projectId, client, intents) {
-  const parent = `projects/${projectId}/agent`;
   await client.batchUpdateIntents({
-    parent,
+    parent: `projects/${projectId}/agent`,
     intentBatchInline: { intents },
   });
 }
