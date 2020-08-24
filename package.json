@@ -6,6 +6,9 @@
   "scripts": {
     "start": "./node_modules/.bin/nodemon src/app.js",
     "test": "./node_modules/.bin/jest",
+    "test:cov": "./node_modules/.bin/jest --coverage",
+    "test:watch": "./node_modules/.bin/jest --watch",
+    "test:watchall": "./node_modules/.bin/jest --watchAll",
     "lint": "./node_modules/.bin/eslint src/",
     "lint:fix": "./node_modules/.bin/eslint --fix src/"
   },
@@ -36,5 +39,9 @@
     "jest": "^26.4.2",
     "nodemon": "^2.0.4",
     "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [ "/node_modules/" ]
   }
 }
