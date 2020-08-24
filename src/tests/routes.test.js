@@ -1,6 +1,7 @@
 require('dotenv').config();
 const request = require('supertest');
 const express = require('express');
+const bodyParser = require('body-parser');
 const router = require('../api/index');
 const sampleGraph = require('./sample.json');
 
@@ -26,6 +27,7 @@ describe('GET endpoints', () => {
 
 describe('POST endpoints', () => {
   const app = express();
+  app.use(bodyParser.json());
   app.use(router);
   const server = app.listen();
 
