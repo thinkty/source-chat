@@ -48,8 +48,8 @@ mongoose.connect(process.env.DATABASE_URL, {
   useFindAndModify: true,
 });
 
-mongoose.connection.once('open', () => { logger.info(`MongoDB connection open`); });
+mongoose.connection.once('open', () => { logger.info('MongoDB connection open'); });
 mongoose.connection.on('error', () => { logger.error('MongoDB error'); });
-mongoose.connection.on('disconnected', () => { logger.info(`MongoDB disconnected`); });
+mongoose.connection.on('disconnected', () => { logger.info('MongoDB disconnected'); });
 
 app.listen(port, logger.info(`Listening on port: ${port}`));
