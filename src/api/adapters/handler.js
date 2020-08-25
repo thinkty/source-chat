@@ -143,7 +143,7 @@ async function handleUserInput(id, input) {
     logger.error(typeof error === 'string' ? error : JSON.stringify(error));
 
     const { Message } = protos.google.cloud.dialogflow.v2.Intent;
-    return [new Message({ text: { text: ['Error: please try again later'] } })];
+    return [new Message({ text: { text: ['Error: fatal flaw in flow'] } })];
   }
 }
 
