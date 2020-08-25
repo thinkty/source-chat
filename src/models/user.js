@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 /**
  * This schema is intented to keep track of the user status. The user property
@@ -10,4 +10,4 @@ const UserSchema = new Schema({
   state: { type: String, default: 'root' },
 }, { timestamps: true });
 
-module.exports = { UserSchema };
+module.exports = { User: model('User', UserSchema) };
