@@ -41,9 +41,9 @@ async function updateNewIntents(projectId, client, intents) {
  */
 async function update(intents) {
   const env = process.env.NODE_ENV;
-  const clientEmail = env === 'debug' ? process.env.DEBUG_DIALOGFLOW_CLIENT_EMAIL : process.env.DIALOGFLOW_CLIENT_EMAIL;
-  const privateKey = (env === 'debug' ? process.env.DEBUG_DIALOGFLOW_PRIVATE_KEY : process.env.DIALOGFLOW_PRIVATE_KEY).replace(/\\n/g, '\n');
-  const projectId = env === 'debug' ? process.env.DEBUG_DIALOGFLOW_PROJECT_ID : process.env.DIALOGFLOW_PROJECT_ID;
+  const clientEmail = env === 'test' ? process.env.DEBUG_DIALOGFLOW_CLIENT_EMAIL : process.env.DIALOGFLOW_CLIENT_EMAIL;
+  const privateKey = (env === 'test' ? process.env.DEBUG_DIALOGFLOW_PRIVATE_KEY : process.env.DIALOGFLOW_PRIVATE_KEY).replace(/\\n/g, '\n');
+  const projectId = env === 'test' ? process.env.DEBUG_DIALOGFLOW_PROJECT_ID : process.env.DIALOGFLOW_PROJECT_ID;
 
   const client = new IntentsClient({
     credentials: {

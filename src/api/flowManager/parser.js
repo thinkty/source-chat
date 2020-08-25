@@ -10,7 +10,7 @@ const { v4: uuidv4 } = require('uuid');
  */
 function formatContextName(context) {
   const env = process.env.NODE_ENV;
-  const projectId = env === 'debug' ? process.env.DEBUG_DIALOGFLOW_PROJECT_ID : process.env.DIALOGFLOW_PROJECT_ID;
+  const projectId = env === 'test' ? process.env.DEBUG_DIALOGFLOW_PROJECT_ID : process.env.DIALOGFLOW_PROJECT_ID;
   const session = uuidv4();
 
   return `projects/${projectId}/agent/sessions/${session}/contexts/${context}`;
