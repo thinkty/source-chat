@@ -3,7 +3,7 @@
  * - Discord : requires initialization due to websocket usage
  */
 
-const { DiscordAdapter } = require("./discord");
+const { DiscordAdapter } = require('./discord');
 
 function init() {
   DiscordAdapter.login(process.env.DISCORD_TOKEN);
