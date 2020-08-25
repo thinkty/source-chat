@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema } = require('mongoose');
 
 /**
  * This schema is intented to keep track of the user status. The user property
