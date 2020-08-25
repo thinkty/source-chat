@@ -59,9 +59,7 @@ class StateTable {
       });
     });
 
-    if (process.env.NODE_ENV !== 'test') {
-      logger.info('Updated State Table');
-    }
+    logger.info('Updated State Table');
   }
 
   /**

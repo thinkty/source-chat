@@ -5,9 +5,7 @@ const { handleUserInput } = require('./handler');
 const client = new Discord.Client();
 
 client.on('ready', () => {
-  if (process.env.NODE_ENV !== 'test') {
-    logger.info('Discord adapter ready');
-  }
+  logger.info('Discord adapter ready');
 });
 
 client.on('error', (error) => {
