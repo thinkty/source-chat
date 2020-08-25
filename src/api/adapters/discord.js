@@ -27,8 +27,8 @@ client.on('message', async (message) => {
   logger.info(`Discord | ${id} | ${content}`);
 
   await handleUserInput(id, content)
-    .then((response) => {
-      channel.send(response);
+    .then((payload) => {
+      channel.send(payload.content);
     })
     .catch((error) => {
       logger.error(error);
