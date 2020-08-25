@@ -118,8 +118,7 @@ async function detectIntent(states, input) {
  * database for the current state of the user
  * @param {string} input Input given from the user that will be used to detect
  * an intent from Dialogflow
- * @returns {import("@google-cloud/dialogflow").protos.google.cloud.dialogflow.v2.Intent.Message[]}
- * Payload to send to user
+ * @returns Payload to send to user
  */
 async function handleUserInput(id, input) {
   try {

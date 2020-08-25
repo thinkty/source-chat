@@ -27,13 +27,13 @@ async function retrieveUser(id) {
  * Given an ID of the user and the new state value, update the database
  *
  * @param {string} id Unique id of the user
- * @param {string} state New state value
+ * @param {string[]} states New state values
  */
-async function updateUser(id, state) {
-  await User.findByIdAndUpdate({ user: id }, { state })
+async function updateUser(id, states) {
+  await User.findByIdAndUpdate({ user: id }, { state: states })
     .exec()
     .then(() => {
-      logger.debug(`Updated ${id} state to ${state}`);
+      logger.debug(`Updated ${id} state to ${states}`);
     })
     .catch((error) => {
       logger.debug(`Failed to update ${id}`);
