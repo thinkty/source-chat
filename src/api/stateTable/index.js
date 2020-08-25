@@ -61,6 +61,31 @@ class StateTable {
 
     logger.info('Updated State Table');
   }
+
+  /**
+   * Method to lookup the table with the given current state and display name of
+   * the intent. Return the next states based on the table.
+   *
+   * @param {string[]} states An array of current states
+   * @param {string} value Display name of the intent detected by user input
+   * @returns {string[]} An array of string that contains next states
+   */
+  lookup(states, value) {
+    const nextStates = [];
+
+    states.forEach((state) => {
+      const row = this.table.get(state);
+      const outputStates = row.get(value);
+
+      if (Array.isArray(outputStates)) {
+        outputStates.forEach((nextState) => {
+          nextStates.push(nextState);
+        });
+      }
+    });
+
+    return nextStates;
+  }
 }
 
 module.exports = { StateTable: new StateTable() };
