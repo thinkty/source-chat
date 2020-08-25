@@ -11,6 +11,7 @@ const { SessionsClient, protos } = require('@google-cloud/dialogflow');
 const { v4: uuidv4 } = require('uuid');
 const { retrieveUser, createUser } = require('../../utils/db');
 const logger = require('../../utils/logger');
+const { StateTable } = require('../stateTable');
 
 /**
  * Helper function to get the state of the given user. If the retrieved document
@@ -123,16 +124,23 @@ async function handleUserInput(id, input) {
     const response = await detectIntent(states, input);
 
     const { queryResult } = response;
-    const { intent, fulfillmentMessages, action } = queryResult;
-    const { displayName } = intent;
-  } catch (error) {
-    logger.error(JSON.stringify(error));
-  }
+    const { intent, fulfillmentMessages } = queryResult;
 
-  return {
-    type: 'text',
-    content: 'TEMP',
-  };
+    if (!intent) {
+      throw `Cannot detect intent from ${states.toString()} with '${input}'`;
+    }
+
+    const { displayName } = intent;
+    const nextStates = StateTable.lookup(states, displayName);
+
+
+  } catch (error) {
+    logger.error(typeof error === 'string' ? error : JSON.stringify(error));
+    return {
+      type: 'text',
+      content: 'Error: please try again later',
+    };
+  }
 }
 
 module.exports = {
