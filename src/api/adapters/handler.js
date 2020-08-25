@@ -138,7 +138,6 @@ async function handleUserInput(id, input) {
     await updateUser(id, nextStates);
 
     return fulfillmentMessages;
-
   } catch (error) {
     logger.error(typeof error === 'string' ? error : JSON.stringify(error));
 

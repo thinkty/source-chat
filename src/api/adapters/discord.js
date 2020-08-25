@@ -15,8 +15,8 @@ client.on('error', (error) => {
 /**
  * Handle incoming messages and send the response back to the user
  */
-client.on('message', async (message) => {
-  const { content, channel, author } = message;
+client.on('message', async (discordMessage) => {
+  const { content, channel, author } = discordMessage;
   const { id, username } = author;
 
   // Ignore messages from the bot itself
