@@ -19,7 +19,9 @@ async function handleGraph(req, res) {
   const { body } = req;
   const { agent, graph } = body;
 
-  logger.info(`Received graph for ${agent}`);
+  if (process.env.NODE_ENV !== 'test') {
+    logger.info(`Received graph for ${agent}`);
+  }
 
   // Step 1
   const { intentNodes, contextNodes } = validate(graph);
