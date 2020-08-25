@@ -35,8 +35,16 @@ describe('Testing CRUD for User model', () => {
     await updateUser(testingId, sampleStates);
     const doc = await retrieveUser(testingId);
     const { states } = doc;
+    const parsedStates = states.toObject();
 
-    expect(states.toObject()).toEqual(sampleStates);
+    expect(parsedStates.length).toEqual(sampleStates.length);
+
+    for (let i = 0; i < sampleStates.length; i += 1) {
+      const sourceState = sampleStates[i];
+      const targetState = parsedStates[i];
+
+      expect(sourceState).toEqual(targetState);
+    }
   });
 
   it('should delete the specified user', async () => {
