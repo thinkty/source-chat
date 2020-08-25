@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const router = require('../api/index');
 const sampleGraph = require('./sample.json');
+const { closeAdapters } = require('../api/adapters');
 
 describe('GET endpoints', () => {
   const app = express();
@@ -41,5 +42,6 @@ describe('POST endpoints', () => {
 
   afterAll((done) => {
     server.close();
+    closeAdapters(); // Must close all open adapters at the end of all tests
   });
 });

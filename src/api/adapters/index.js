@@ -9,4 +9,14 @@ function init() {
   DiscordAdapter.login(process.env.DISCORD_TOKEN);
 }
 
-module.exports = { initializeAdapters: init };
+/**
+ * Terminate all open connections for cleanup
+ */
+function close() {
+  DiscordAdapter.destroy();
+}
+
+module.exports = {
+  initializeAdapters: init,
+  closeAdapters: close,
+};
