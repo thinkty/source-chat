@@ -9,6 +9,7 @@
     "test:cov": "NODE_ENV=debug ./node_modules/.bin/jest --coverage",
     "test:watch": "NODE_ENV=debug ./node_modules/.bin/jest --watch",
     "test:watchall": "NODE_ENV=debug ./node_modules/.bin/jest --watchAll",
+    "test:leaks": "NODE_ENV=debug ./node_modules/.bin/jest --runInBand --detectOpenHandles",
     "lint": "./node_modules/.bin/eslint src/",
     "lint:fix": "./node_modules/.bin/eslint --fix src/"
   },
