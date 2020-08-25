@@ -12,6 +12,7 @@
 const express = require('express');
 const { handleGraph } = require('./flowManager/index');
 const { StateTable } = require('./stateTable');
+const { initializeAdapters } = require('./adapters');
 
 const router = express.Router();
 
@@ -39,5 +40,7 @@ router.get('/flow', async (req, res, next) => {
     next(error);
   }
 });
+
+initializeAdapters();
 
 module.exports = router;
