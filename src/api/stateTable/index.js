@@ -60,4 +60,4 @@ class StateTable {
   }
 }
 
-exports.StateTable = new StateTable();
+module.exports = { StateTable: new StateTable() };
