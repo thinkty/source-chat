@@ -26,12 +26,12 @@ async function getUserState(id) {
   if (doc == null || doc === '') {
     await createUser(id);
     const newDoc = await retrieveUser(id);
-    const { state } = newDoc;
-    return state;
+    const { states } = newDoc;
+    return states;
   }
 
-  const { state } = doc;
-  return state;
+  const { states } = doc;
+  return states;
 }
 
 /**
@@ -118,7 +118,7 @@ async function detectIntent(states, input) {
  * database for the current state of the user
  * @param {string} input Input given from the user that will be used to detect
  * an intent from Dialogflow
- * @returns Payload to send to user
+ * @returns Message objects to send to user
  */
 async function handleUserInput(id, input) {
   try {
@@ -140,6 +140,7 @@ async function handleUserInput(id, input) {
 
   } catch (error) {
     logger.error(typeof error === 'string' ? error : JSON.stringify(error));
+
     const { Message } = protos.google.cloud.dialogflow.v2.Intent;
     return [new Message({ text: { text: ['Error: please try again later'] } })];
   }
