@@ -31,7 +31,7 @@ client.on('message', async (message) => {
       channel.send(payload.content);
     })
     .catch((error) => {
-      logger.error(error);
+      logger.error(typeof error === 'string' ? error : JSON.stringify(error));
     });
 });
 
