@@ -29,7 +29,7 @@ describe('Testing CRUD for User model', () => {
     const doc = await retrieveUser(testingId);
     const { user } = doc;
     expect(user).toEqual(testingId);
-  })
+  });
 
   it('should update the user', async () => {
     await updateUser(testingId, sampleStates);

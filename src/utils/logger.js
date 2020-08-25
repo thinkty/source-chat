@@ -29,7 +29,7 @@ if (process.env.NODE_ENV !== 'test') {
   transportsList.push(
     new transports.Console({
       format: combine(format.timestamp(), customFormat),
-    })
+    }),
   );
 }
 
