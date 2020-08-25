@@ -6,14 +6,18 @@
 const { DiscordAdapter } = require('./discord');
 
 function init() {
-  DiscordAdapter.login(process.env.DISCORD_TOKEN);
+  if (!!process.env.DISCORD_TOKEN) {
+    DiscordAdapter.login(process.env.DISCORD_TOKEN);
+  }
 }
 
 /**
  * Terminate all open connections for cleanup
  */
 function close() {
-  DiscordAdapter.destroy();
+  if (!!process.env.DISCORD_TOKEN) {
+    DiscordAdapter.destroy();
+  }
 }
 
 module.exports = {
