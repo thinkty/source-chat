@@ -27,8 +27,11 @@ client.on('message', async (message) => {
   logger.info(`Discord | ${id} | ${content}`);
 
   await handleUserInput(id, content)
-    .then((payload) => {
-      channel.send(payload.content);
+    .then((messages) => {
+      messages.forEach((message) => {
+        const { text } = message;
+        channel.send(text.text);
+      });
     })
     .catch((error) => {
       logger.error(typeof error === 'string' ? error : JSON.stringify(error));
