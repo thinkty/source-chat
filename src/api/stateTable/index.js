@@ -1,4 +1,5 @@
 const { IntentsClient } = require('@google-cloud/dialogflow');
+const logger = require('../../utils/logger');
 
 /**
  * Helper method to de-format the context name that includes all the
@@ -57,6 +58,8 @@ class StateTable {
         this.table.set(state, map.set(displayName, nextStates));
       });
     });
+
+    logger.info('Updated State Table');
   }
 }
 
