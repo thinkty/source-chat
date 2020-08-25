@@ -50,7 +50,8 @@ cd dialogflow-editor-server
 ```
 npm install
 ```
-3. Setup the environment variables in a `.env` file. **!Caution!** Do not expose your .env file to others as it includes sensitive information. Add .env to `.gitignore`.
+3. Setup the environment variables in a `.env` file. If some of the crucial tokens are not given for an adapter, that adapter will not be enabled. **!Caution!** Do not expose your .env file to others as it includes sensitive information.
+
 
 4. Start your server
 ```
