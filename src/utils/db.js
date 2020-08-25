@@ -19,7 +19,8 @@ async function createUser(id) {
  * @param {string} id Unique id of the user
  */
 async function retrieveUser(id) {
-  return await User.findOne({ user: id }).exec();
+  const doc = await User.findOne({ user: id }).exec();
+  return doc;
 }
 
 /**
