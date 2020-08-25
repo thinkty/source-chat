@@ -47,7 +47,7 @@ mongoose.connect(process.env.DATABASE_URL, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useCreateIndex: true,
-  useFindAndModify: true,
+  useFindAndModify: false,
 });
 
 mongoose.connection.once('open', () => { logger.info('MongoDB connection open'); });

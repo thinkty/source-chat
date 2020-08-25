@@ -30,13 +30,10 @@ async function retrieveUser(id) {
  * @param {string[]} states New state values
  */
 async function updateUser(id, states) {
-  await User.findByIdAndUpdate({ user: id }, { states })
+  await User.findOneAndUpdate({ user: id }, { states })
     .exec()
     .then(() => {
       logger.debug(`Updated ${id} state to ${states}`);
-    })
-    .catch((error) => {
-      logger.debug(`Failed to update ${id}`);
     });
 }
 
