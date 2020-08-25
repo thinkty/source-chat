@@ -114,6 +114,7 @@ async function detectIntent(states, input) {
  * - Update the user's state with the retrieved states
  * - Send the responses
  *
+ * @see https://googleapis.dev/nodejs/dialogflow/latest/google.cloud.dialogflow.v2.Intent.Message.html
  * @param {string} id Unique ID of the user that will be used to query the
  * database for the current state of the user
  * @param {string} input Input given from the user that will be used to detect
