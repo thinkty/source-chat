@@ -9,7 +9,7 @@
 
 const { SessionsClient, protos } = require('@google-cloud/dialogflow');
 const { v4: uuidv4 } = require('uuid');
-const { retrieveUser, createUser } = require('../../utils/db');
+const { retrieveUser, createUser, updateUser } = require('../../utils/db');
 const logger = require('../../utils/logger');
 const { StateTable } = require('../stateTable');
 
@@ -111,12 +111,15 @@ async function detectIntent(states, input) {
  * - With the state and user input, query Dialogflow for the intent
  * - Lookup the state transition table with current state and the intent's
  * display name
+ * - Update the user's state with the retrieved states
+ * - Send the responses
  *
  * @param {string} id Unique ID of the user that will be used to query the
  * database for the current state of the user
  * @param {string} input Input given from the user that will be used to detect
  * an intent from Dialogflow
- * @returns Payload to send to user
+ * @returns {import("@google-cloud/dialogflow").protos.google.cloud.dialogflow.v2.Intent.Message[]}
+ * Payload to send to user
  */
 async function handleUserInput(id, input) {
   try {
@@ -132,14 +135,14 @@ async function handleUserInput(id, input) {
 
     const { displayName } = intent;
     const nextStates = StateTable.lookup(states, displayName);
+    await updateUser(id, nextStates);
 
+    return fulfillmentMessages;
 
   } catch (error) {
     logger.error(typeof error === 'string' ? error : JSON.stringify(error));
-    return {
-      type: 'text',
-      content: 'Error: please try again later',
-    };
+    const { Message } = protos.google.cloud.dialogflow.v2.Intent;
+    return [new Message({ text: { text: ['Error: please try again later'] } })];
   }
 }
 
