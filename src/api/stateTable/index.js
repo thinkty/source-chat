@@ -2,7 +2,7 @@ const { IntentsClient } = require('@google-cloud/dialogflow');
 const logger = require('../../utils/logger');
 
 /**
- * Helper method to de-format the context name that includes all the
+ * Helper function to de-format the context name that includes all the
  * unnecessary information and extract only the actual context name
  *
  * @param {string} context Formatted context name
