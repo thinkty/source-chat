@@ -11,5 +11,6 @@ Scripts:
 Tests:
 - [API routes](https://github.com/thinkty/dialogflow-editor-server/blob/master/src/tests/routes.test.js) : tested using [supertest](https://github.com/visionmedia/supertest) and testing the individual routes
 - [Database](https://github.com/thinkty/dialogflow-editor-server/blob/master/src/tests/db.test.js) : testing the controllers for the User model
+- [State Table](https://github.com/thinkty/dialogflow-editor-server/blob/master/src/tests/stateTable.test.js) : testing the singleton class' `update` method and `lookup` method
 
 Currently, there aren't any unit tests for the individual modules and functions except for the database tests and the intent table tests.
