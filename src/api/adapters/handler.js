@@ -128,13 +128,13 @@ async function handleUserInput(id, input) {
     const response = await detectIntent(currStates, input);
 
     const { queryResult } = response;
-    const { intent, fulfillmentMessages } = queryResult;
+    const { intent, fulfillmentMessages, action } = queryResult;
 
     if (!intent) {
       throw `Cannot detect intent from ${currStates.toString()} with '${input}'`;
     }
 
-    const { displayName, action } = intent;
+    const { displayName } = intent;
     const nextStates = StateTable.lookup(currStates, displayName);
 
     if (action) {
