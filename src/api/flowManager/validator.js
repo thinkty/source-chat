@@ -1,6 +1,8 @@
-const INTENT_TYPE = 'intentNode';
-const CONTEXT_TYPE = 'contextNode';
-const expectedNodeTypes = [INTENT_TYPE, CONTEXT_TYPE];
+const {
+  INTENT_TYPE,
+  CONTEXT_TYPE,
+  expectedNodeTypes,
+} = require('../../config/graph');
 
 /**
  * Check whether the graph has valid nodes and edges. The graph must have
