@@ -53,8 +53,9 @@ npm install
 ```
 3. Setup the environment variables in a `.env` file. If some of the crucial tokens are not given for an adapter, that adapter will not be enabled. **!Caution!** Do not expose your .env file to others as it includes sensitive information.
 
+4. If you have any intents with the action value specified and would like to handle it in the server, add the handlers in the [action.js](https://github.com/thinkty/dialogflow-editor-server/tree/master/src/api/adapters). If you are not sure what this process means, please read the Chatbot segment.
 
-4. Start your server
+5. Start your server
 ```
 npm start
 ```
