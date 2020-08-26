@@ -6,7 +6,7 @@
 const { DiscordAdapter } = require('./discord');
 
 function init() {
-  if (!!process.env.DISCORD_TOKEN) {
+  if (process.env.DISCORD_TOKEN) {
     DiscordAdapter.login(process.env.DISCORD_TOKEN);
   }
 }
@@ -15,7 +15,7 @@ function init() {
  * Terminate all open connections for cleanup
  */
 function close() {
-  if (!!process.env.DISCORD_TOKEN) {
+  if (process.env.DISCORD_TOKEN) {
     DiscordAdapter.destroy();
   }
 }
