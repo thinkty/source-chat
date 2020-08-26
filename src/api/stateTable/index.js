@@ -75,12 +75,14 @@ class StateTable {
 
     states.forEach((state) => {
       const row = this.table.get(state);
-      const outputStates = row.get(value);
+      if (!!row && row instanceof Map) {
+        const outputStates = row.get(value);
 
-      if (Array.isArray(outputStates)) {
-        outputStates.forEach((nextState) => {
-          nextStates.push(nextState);
-        });
+        if (Array.isArray(outputStates)) {
+          outputStates.forEach((nextState) => {
+            nextStates.push(nextState);
+          });
+        }
       }
     });
 
