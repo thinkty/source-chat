@@ -21,3 +21,4 @@ During the process of handling the user input, if an action is specified in the 
 - **how** action `string`
 
 After handling the action, the response to send to the user and the next states should be returned.
+When adding a new action or modifying the pre-existing action, make sure to add/modify the action.js and add it to the action map for it to work properly.
