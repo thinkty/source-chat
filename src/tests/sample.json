@@ -19,16 +19,6 @@
     "source": "0c810a65-d0e8-408d-8218-c3dc7f8fd910",
     "target": "a0c13faf-723d-4208-85d0-76eaf7c790c5",
     "type": "basicEdge"
-  }, {
-    "id": "c578039a-4a0c-428c-8423-6fe9488a4991",
-    "source": "a0c13faf-723d-4208-85d0-76eaf7c790c5",
-    "target": "0a383999-e14b-49d7-a9c6-3f61b9b573b4",
-    "type": "basicEdge"
-  }, {
-    "id": "53f7bd4f-6d76-49db-bdfc-325bf74c9a78",
-    "source": "0a383999-e14b-49d7-a9c6-3f61b9b573b4",
-    "target": "d112c1fa-d286-41c0-99ef-3db416f0f132",
-    "type": "basicEdge"
   }],
   "nodes": [{
     "id": "a0c13faf-723d-4208-85d0-76eaf7c790c5",
@@ -36,7 +26,7 @@
     "type": "intentNode",
     "contexts": {
       "in": ["0c810a65-d0e8-408d-8218-c3dc7f8fd910"],
-      "out": ["c802d68d-c57d-40cf-bb72-536b5413741d", "0a383999-e14b-49d7-a9c6-3f61b9b573b4"]
+      "out": ["c802d68d-c57d-40cf-bb72-536b5413741d"]
     },
     "events": ["hello"],
     "trainingPhrases": ["hello", "hi", "hiiiii", "nice to meet you"],
@@ -46,7 +36,7 @@
     ],
     "fulfillment": true,
     "isFallback": false,
-    "x": 396.5,
+    "x": 256,
     "y": 396.5
   }, {
     "id": "c802d68d-c57d-40cf-bb72-536b5413741d",
@@ -94,31 +84,7 @@
     "type": "contextNode",
     "id": "0c810a65-d0e8-408d-8218-c3dc7f8fd910",
     "title": "root",
-    "x": 396.5,
+    "x": 256,
     "y": 115.5
-  }, {
-    "type": "contextNode",
-    "id": "0a383999-e14b-49d7-a9c6-3f61b9b573b4",
-    "title": "Hello-2",
-    "x": 677.5,
-    "y": 677.5
-  }, {
-    "type": "intentNode",
-    "contexts": {
-      "in": ["0a383999-e14b-49d7-a9c6-3f61b9b573b4"],
-      "out": []
-    },
-    "events": [],
-    "trainingPhrases": [],
-    "action": "",
-    "responses": [
-      ["Oopsie"]
-    ],
-    "fulfillment": false,
-    "isFallback": true,
-    "id": "d112c1fa-d286-41c0-99ef-3db416f0f132",
-    "title": "Hello-4",
-    "x": 677.5,
-    "y": 958.5
   }]
 }
