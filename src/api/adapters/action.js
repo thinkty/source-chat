@@ -7,7 +7,7 @@ async function test(id, input, nextStates, currStates) {
   const { Message } = protos.google.cloud.dialogflow.v2.Intent;
   return {
     states: nextStates,
-    message: new Message({ text: { text: [input] } }),
+    messages: [new Message({ text: { text: [input] } })],
   };
 }
 
@@ -23,11 +23,11 @@ const actionMap = {
  * handle action
  *
  * @param {string[]} states Next states of the user
- * @param {import('@google-cloud/dialogflow').protos.google.cloud.dialogflow.v2.Intent.Message}
- * message Message to send to user
+ * @param {import('@google-cloud/dialogflow').protos.google.cloud.dialogflow.v2.Intent.Message[]}
+ * messages Message to send to user
  */
-function createActionResponse(states, message) {
-  return { states, message };
+function createActionResponse(states, messages) {
+  return { states, messages };
 }
 
 /**
@@ -48,8 +48,8 @@ async function handleAction(id, input, nextStates, currStates, action) {
     return createActionResponse(null, `Could not find an action handler for ${action}`);
   }
 
-  const { states, message } = await actionHandler(id, input, nextStates, currStates);
-  return createActionResponse(states, message);
+  const { states, messages } = await actionHandler(id, input, nextStates, currStates);
+  return createActionResponse(states, messages);
 }
 
 module.exports = { handleAction };

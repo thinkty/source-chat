@@ -12,6 +12,7 @@ const { v4: uuidv4 } = require('uuid');
 const { retrieveUser, createUser, updateUser } = require('../../utils/db');
 const logger = require('../../utils/logger');
 const { StateTable } = require('../stateTable');
+const { handleAction } = require('./action');
 
 /**
  * Helper function to get the state of the given user. If the retrieved document
@@ -123,18 +124,28 @@ async function detectIntent(states, input) {
  */
 async function handleUserInput(id, input) {
   try {
-    const states = await getUserState(id);
-    const response = await detectIntent(states, input);
+    const currStates = await getUserState(id);
+    const response = await detectIntent(currStates, input);
 
     const { queryResult } = response;
     const { intent, fulfillmentMessages } = queryResult;
 
     if (!intent) {
-      throw `Cannot detect intent from ${states.toString()} with '${input}'`;
+      throw `Cannot detect intent from ${currStates.toString()} with '${input}'`;
     }
 
-    const { displayName } = intent;
-    const nextStates = StateTable.lookup(states, displayName);
+    const { displayName, action } = intent;
+    const nextStates = StateTable.lookup(currStates, displayName);
+
+    if (action) {
+      const { states, messages } = await handleAction(id, input, nextStates, currStates, action);
+
+      if (states) {
+        await updateUser(id, states);
+      }
+      return messages;
+    }
+
     await updateUser(id, nextStates);
 
     return fulfillmentMessages;
