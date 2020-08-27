@@ -9,12 +9,13 @@
  * - /flow : handles updating Dialogflow and the state transition table
  */
 
-const express = require('express');
+const { Router } = require('express');
 const { handleGraph } = require('./flowManager/index');
 const { StateTable } = require('./stateTable');
-const { initializeAdapters } = require('./adapters');
+const { initializeAdapters, adapterRouter } = require('./adapters');
 
-const router = express.Router();
+const router = Router();
+router.use(adapterRouter);
 
 router.get('/', (req, res, next) => {
   try {

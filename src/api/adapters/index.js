@@ -1,9 +1,14 @@
 /**
  * This module initializes various adapters if needed.
  * - Discord : requires initialization due to websocket usage
+ * - Slack : needs to setup route
  */
-
+const { Router } = require('express');
 const { DiscordAdapter } = require('./discord');
+const { slackRouter } = require('./slack');
+
+const router = Router();
+router.use('/slack', slackRouter);
 
 function init() {
   if (process.env.DISCORD_TOKEN) {
@@ -23,4 +28,5 @@ function close() {
 module.exports = {
   initializeAdapters: init,
   closeAdapters: close,
+  adapterRouter: router,
 };

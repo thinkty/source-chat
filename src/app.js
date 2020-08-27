@@ -41,7 +41,7 @@ app.use((err, req, res, next) => {
     res.sendStatus(500);
   }
 });
-app.use('/', router);
+app.use(router);
 
 mongoose.connect(process.env.DATABASE_URL, {
   useUnifiedTopology: true,
