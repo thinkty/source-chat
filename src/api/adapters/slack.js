@@ -1,6 +1,29 @@
 const { Router } = require('express');
+const { default: axios } = require('axios');
 const { handleUserInput } = require('./handler');
 const logger = require('../../utils/logger');
+
+/**
+ * Helper function to send messages to the specified Slack channel
+ *
+ * @param {string} channel Channel to send the responses to
+ * @param {string[]} texts Messages to send
+ */
+function sendTexts(channel, texts) {
+  axios.post('https://slack.com/api/chat.postMessage', {
+    channel,
+    text: texts
+  },
+  {
+    headers: { Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}` }
+  })
+  .then(() => {
+    logger.info(`-> Slack | ${channel} | ${texts.toString()}`);
+  })
+  .catch((reason) => {
+    logger.error(typeof reason === 'string' ? reason : JSON.stringify(reason));
+  })
+}
 
 /**
  * 
@@ -8,16 +31,20 @@ const logger = require('../../utils/logger');
  * user input, etc
  */
 async function handleEventCallbacks(payload) {
-  const { event } = body;
-  const { type, bot_id } = event;
+  const { event } = payload;
+  const { type, bot_id, text, user, channel } = event;
+
+  // Ignore messages from bots including self
+  if (bot_id) {
+    return;
+  }
 
   switch (type) {
     case 'message':
-      
-      break;
-
-    case 'app_mention':
-
+      await handleUserInput(user, text)
+        .then((messages) => {
+          sendTexts(channel, messages.map((message) => message.text.text));
+        });
       break;
 
     default:
@@ -30,7 +57,7 @@ async function handleEventCallbacks(payload) {
  * Function to handle slack events by event type
  * - `url_verification` event is sent when the user first adds the server's url
  * on slack
- * - `event_callback` are Web API events such as direct messages and mentions
+ * - `event_callback` are Web API events such as direct messages, mentions, etc.
  *
  * @see https://api.slack.com/events
  * @param {import('express').Request} req
