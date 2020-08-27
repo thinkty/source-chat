@@ -12,7 +12,7 @@ const logger = require('../../utils/logger');
 function sendTexts(channel, texts) {
   axios.post('https://slack.com/api/chat.postMessage', {
     channel,
-    text: texts
+    text: texts.join('\n'),
   },
   {
     headers: { Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}` }
