@@ -24,13 +24,17 @@ client.on('message', async (discordMessage) => {
     return;
   }
 
-  logger.info(`Discord | ${id} | ${content}`);
+  logger.info(`-> Discord | ${id} | ${content}`);
 
   await handleUserInput(id, content)
     .then((messages) => {
       messages.forEach((message) => {
         const { text } = message;
-        channel.send(text.text);
+        channel
+          .send(text.text)
+          .then(() => {
+            logger.info(`<- Discord | ${id} | ${text.text}`);
+          });
       });
     })
     .catch((error) => {

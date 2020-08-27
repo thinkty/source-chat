@@ -18,7 +18,7 @@ function sendTexts(channel, texts) {
     headers: { Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}` }
   })
   .then(() => {
-    logger.info(`-> Slack | ${channel} | ${texts.toString()}`);
+    logger.info(`<- Slack | ${channel} | ${texts.toString()}`);
   })
   .catch((reason) => {
     logger.error(typeof reason === 'string' ? reason : JSON.stringify(reason));
@@ -41,6 +41,7 @@ async function handleEventCallbacks(payload) {
 
   switch (type) {
     case 'message':
+      logger.info(`-> Slack | ${user}, ${channel} | ${text}`);
       await handleUserInput(user, text)
         .then((messages) => {
           sendTexts(channel, messages.map((message) => message.text.text));
