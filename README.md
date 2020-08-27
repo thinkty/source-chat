@@ -66,8 +66,7 @@ In the description, there are requirements for the adapter.
 The required environment variables should be set for the adapter/bot to function properly.
 
 - [Discord](https://github.com/thinkty/dialogflow-editor-server/blob/master/src/api/adapters/discord.js): It requires `DISCORD_TOKEN` and `DISCORD_BOT_NAME`.`DISCORD_TOKEN` is the bot token (not the client secret) under Bot settings. `DISCORD_BOT_NAME` is the name of the bot and is used to ignore messages sent by the bot itself.
-- Facebook Messenger : TBA
-- Slack : TBA
+- [Slack](https://github.com/thinkty/dialogflow-editor-server/blob/master/src/api/adapters/slack.js) : It requires `SLACK_BOT_TOKEN`. `SLACK_BOT_TOKEN` is the Bot User OAuth Access Token that can be found under **OAuth & Permissions** in the application page.
 - KakaoTalk : TBA
 
 ## Plans
