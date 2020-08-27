@@ -15,7 +15,9 @@ const { StateTable } = require('./stateTable');
 const { initializeAdapters, adapterRouter } = require('./adapters');
 
 const router = Router();
-router.use(adapterRouter);
+if (process.env.SLACK_BOT_TOKEN) {
+  router.use(adapterRouter);
+}
 
 router.get('/', (req, res, next) => {
   try {
