@@ -32,7 +32,7 @@ The chatbot segment handles the interaction between the message platform such as
 6. The server sends a request to Dialogflow to detect which intent the user's message falls into based on the context (state) and the user input
 7. Based on the current context of the user and the input (message), Dialogflow computes the appropriate intent
 8. Dialogflow responds with an intent that may contain an action which will help the server to make decisions
-9. After getting the intent back from Dialogflow, if the intent's action is specified, that has to be handled. This process is better explained in the [README](https://github.com/thinkty/dialogflow-editor-server/tree/master/src/api/adapters) for the adapters.
+9. After getting the intent back from Dialogflow, if the intent's action is specified, that has to be handled. This process is better explained in the [README](https://github.com/thinkty/source-chat/tree/master/src/api/adapters) for the adapters.
 10. After deciding the next states of the user, the server sends message(s) (reply to the user) to the platform
 11. After validation, the platform passes on the message to the user
 
@@ -56,7 +56,7 @@ npm install
 ```
 3. Setup the environment variables in a `.env` file. If some of the crucial tokens are not given for an adapter, that adapter will not be enabled. In addition to the adapters, this server also uses MongoDB. Therefore, an additional step of creating a MongoDB cluster might is required beforehand. **!Caution!** Do not expose your .env file to others as it includes sensitive information.
 
-4. If you have any intents with the action value specified and would like to handle it in the server, add the handlers in the [action.js](https://github.com/thinkty/dialogflow-editor-server/tree/master/src/api/adapters). If you are not sure what this process means, please read the Chatbot segment.
+4. If you have any intents with the action value specified and would like to handle it in the server, add the handlers in the [action.js](https://github.com/thinkty/source-chat/tree/master/src/api/adapters). If you are not sure what this process means, please read the Chatbot segment.
 
 5. Start your server
 ```
@@ -68,8 +68,8 @@ Below is the list of adapters ready for use with the server.
 In the description, there are requirements for the adapter.
 The required environment variables should be set for the adapter/bot to function properly.
 
-- [Discord](https://github.com/thinkty/dialogflow-editor-server/blob/master/src/api/adapters/discord.js): It requires `DISCORD_TOKEN` and `DISCORD_BOT_NAME`.`DISCORD_TOKEN` is the bot token (not the client secret) under Bot settings. `DISCORD_BOT_NAME` is the name of the bot and is used to ignore messages sent by the bot itself.
-- [Slack](https://github.com/thinkty/dialogflow-editor-server/blob/master/src/api/adapters/slack.js) : It requires `SLACK_BOT_TOKEN`. `SLACK_BOT_TOKEN` is the Bot User OAuth Access Token that can be found under **OAuth & Permissions** in the application page.
+- [Discord](https://github.com/thinkty/source-chat/tree/master/src/api/adapters/discord.js): It requires `DISCORD_TOKEN` and `DISCORD_BOT_NAME`.`DISCORD_TOKEN` is the bot token (not the client secret) under Bot settings. `DISCORD_BOT_NAME` is the name of the bot and is used to ignore messages sent by the bot itself.
+- [Slack](https://github.com/thinkty/source-chat/tree/master/src/api/adapters/slack.js) : It requires `SLACK_BOT_TOKEN`. `SLACK_BOT_TOKEN` is the Bot User OAuth Access Token that can be found under **OAuth & Permissions** in the application page.
 
 ## Adding Adapters
 To add a chat platform such as Facebook Messenger, WhatsApp, and more, it requires two parts:
