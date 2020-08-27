@@ -34,7 +34,7 @@ app.use(morgan('common', {
   },
 }));
 app.use((err, req, res, next) => {
-  logger.error(err);
+  logger.error(typeof err === 'string' ? err : JSON.stringify(err));
   if (typeof err === 'string') {
     res.status(500).send(err);
   } else {
