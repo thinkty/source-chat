@@ -14,28 +14,33 @@ function sendTexts(channel, texts) {
     channel,
     text: texts.join('\n'),
   },
-  {
-    headers: { Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}` }
-  })
-  .then(() => {
-    logger.info(`<- Slack | ${channel} | ${texts.toString()}`);
-  })
-  .catch((reason) => {
-    logger.error(typeof reason === 'string' ? reason : JSON.stringify(reason));
-  })
+  { headers: { Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}` } })
+    .then(() => {
+      logger.info(`<- Slack | ${channel} | ${texts.toString()}`);
+    })
+    .catch((reason) => {
+      logger.error(typeof reason === 'string' ? reason : JSON.stringify(reason));
+    });
 }
 
 /**
- * 
+ * Helper method to handle event callbacks from Slack
+ *
  * @param {object} payload Payload from Slack that contains event type, user id,
  * user input, etc
  */
 async function handleEventCallbacks(payload) {
   const { event } = payload;
-  const { type, bot_id, text, user, channel } = event;
+  const {
+    type,
+    bot_id: botId,
+    text,
+    user,
+    channel,
+  } = event;
 
   // Ignore messages from bots including self
-  if (bot_id) {
+  if (botId) {
     return;
   }
 
@@ -68,19 +73,18 @@ async function handleEventCallbacks(payload) {
 function handleSlackEvents(req, res, next) {
   try {
     const { body } = req;
-    const { type } = body;
+    const { type, challenge } = body;
 
     switch (type) {
       case 'url_verification':
-        const { challenge } = body;
         res.send(challenge);
         break;
-      
+
       case 'event_callback':
         res.sendStatus(200); // Need to reply with 200
         handleEventCallbacks(body);
         break;
-    
+
       default:
         throw `Slack | Unexpected event type ${type}`;
     }
