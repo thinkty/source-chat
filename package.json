@@ -1,8 +1,8 @@
 {
-  "name": "dialogflow-editor-server",
+  "name": "source-chat",
   "version": "1.0.0",
   "description": "A template server for managing intents on Dialogflow using the Dialogflow Editor and also serving as a chatbot for various chat application platforms",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "./node_modules/.bin/nodemon src/app.js",
     "test": "NODE_ENV=test ./node_modules/.bin/jest",
@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thinkty/dialogflow-editor-server.git"
+    "url": "git+https://github.com/thinkty/source-chat.git"
   },
   "author": "Tae Yoon Kim",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/thinkty/dialogflow-editor-server/issues"
+    "url": "https://github.com/thinkty/source-chat/issues"
   },
-  "homepage": "https://github.com/thinkty/dialogflow-editor-server",
+  "homepage": "https://github.com/thinkty/source-chat",
   "dependencies": {
     "@google-cloud/dialogflow": "^3.2.0",
     "axios": "^0.20.0",
