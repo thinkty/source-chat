@@ -86,6 +86,10 @@ class StateTable {
       }
     });
 
+    if (nextStates.length === 0) {
+      throw `Cannot find next states based on current states: ${states.toString()} with value: ${value}`;
+    }
+
     return nextStates;
   }
 }
