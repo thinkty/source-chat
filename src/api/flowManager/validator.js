@@ -56,7 +56,7 @@ function validTopContextNode(nodes, edges) {
   });
 
   // Double checking
-  if (nodes.length - visited.size !== 1) {
+  if (nodes.length - visited.size > 1) {
     throw 'Detected dangling nodes or multiple top nodes';
   }
 
