@@ -29,12 +29,15 @@ client.on('message', async (discordMessage) => {
   await handleUserInput(id, content)
     .then((messages) => {
       messages.forEach((message) => {
-        const { text } = message;
-        channel
-          .send(text.text)
-          .then(() => {
-            logger.info(`<- Discord | ${id} | ${text.text}`);
-          });
+        const { text, payload } = message;
+        if (text) {
+          channel
+            .send(text.text)
+            .then(() => logger.info(`<- Discord | ${id} | ${text.text}`));
+        } else if (payload) {
+          /* Your code to handle custom payloads */
+          logger.info(payload);
+        }
       });
     })
     .catch((error) => {

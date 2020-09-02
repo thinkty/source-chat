@@ -4,23 +4,41 @@ const { handleUserInput } = require('./handler');
 const logger = require('../../utils/logger');
 
 /**
- * Helper function to send messages to the specified Slack channel
+ * Helper function to send texts to the specified Slack channel
  *
- * @param {string} channel Channel to send the responses to
- * @param {string[]} texts Messages to send
+ * @param {string} channel Channel to send the texts to
+ * @param {string} text Texts to send
  */
-function sendTexts(channel, texts) {
-  axios.post('https://slack.com/api/chat.postMessage', {
-    channel,
-    text: texts.join('\n'),
-  },
-  { headers: { Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}` } })
+function sendText(channel, text) {
+  axios.post('https://slack.com/api/chat.postMessage',
+    { channel, text },
+    { headers: { Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}` } })
     .then(() => {
-      logger.info(`<- Slack | ${channel} | ${texts.toString()}`);
+      logger.info(`<- Slack | ${channel} | ${text}`);
     })
     .catch((reason) => {
       logger.error(typeof reason === 'string' ? reason : JSON.stringify(reason));
     });
+}
+
+/**
+ * Helper function to send messages to the specified Slack channel
+ *
+ * @param {string} channel Channel to send the responses to
+ * @param {import('@google-cloud/dialogflow').protos.google.cloud.dialogflow.v2.Intent.Message[]}
+ * messages Messages to send
+ */
+function sendMessages(channel, messages) {
+  messages.forEach((message) => {
+    const { text, payload } = message;
+
+    if (text) {
+      sendText(channel, text.text);
+    } else if (payload) {
+      /* Your code to handle custom payloads */
+      logger.info(payload);
+    }
+  });
 }
 
 /**
@@ -48,9 +66,7 @@ async function handleEventCallbacks(payload) {
     case 'message':
       logger.info(`-> Slack | ${user}, ${channel} | ${text}`);
       await handleUserInput(user, text)
-        .then((messages) => {
-          sendTexts(channel, messages.map((message) => message.text.text));
-        });
+        .then((messages) => sendMessages(channel, messages));
       break;
 
     default:
