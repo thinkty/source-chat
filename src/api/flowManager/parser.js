@@ -104,12 +104,19 @@ function formatTrainingPhrases(trainingPhrases) {
  */
 function formatResponses(responses, payload) {
   const { Message } = protos.google.cloud.dialogflow.v2.Intent;
+  const { Struct, Value } = protos.google.protobuf
   const messages = responses.map((pool) => new Message({ text: { text: pool } }));
 
   try {
     const payloadObj = JSON.parse(payload);
+
     if (Object.keys(payloadObj).length !== 0) {
-      messages.push(new Message({ payload: { fields: payloadObj } }));
+      const fields = {};
+      Object.keys(payloadObj).forEach((key) => {
+        fields[key] = new Value({ stringValue: payloadObj[key] });
+      });
+
+      messages.push(new Message({ payload: { fields } }));
     }
   } catch (error) {
     return messages;
