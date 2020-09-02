@@ -104,7 +104,7 @@ function formatTrainingPhrases(trainingPhrases) {
  */
 function formatResponses(responses, payload) {
   const { Message } = protos.google.cloud.dialogflow.v2.Intent;
-  const { Struct, Value } = protos.google.protobuf
+  const { Struct, Value } = protos.google.protobuf;
   const messages = responses.map((pool) => new Message({ text: { text: pool } }));
 
   try {
