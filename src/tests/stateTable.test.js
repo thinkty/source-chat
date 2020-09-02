@@ -22,7 +22,7 @@ describe('Testing the State Transition Table module', () => {
     const states = ['noneExistantState'];
     const value = 'noneExistantIntentDisplayName';
 
-    expect(StateTable.lookup(states, value).length).toEqual(0);
+    expect(() => {StateTable.lookup(states, value)}).toThrow();
   });
 
   it('Should retrieve the appropriate context', () => {
