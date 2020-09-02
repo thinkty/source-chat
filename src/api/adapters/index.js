@@ -6,9 +6,11 @@
 const { Router } = require('express');
 const { DiscordAdapter } = require('./discord');
 const { slackRouter } = require('./slack');
+const { customRouter } = require('./custom');
 
 const router = Router();
 router.use('/slack', slackRouter);
+router.use('/custom', customRouter);
 
 function init() {
   if (process.env.DISCORD_TOKEN) {
