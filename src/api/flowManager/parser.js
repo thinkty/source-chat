@@ -96,14 +96,26 @@ function formatTrainingPhrases(trainingPhrases) {
 
 /**
  * Helper function to format the responses for the intent. Currently, the editor
- * only takes text responses.
+ * only takes text responses and a custom payload. If a custom payload is given,
+ * it checks if the payload is a valid JSON object and has properties
  *
  * @param {object[]} responses Multiple pools of responses to send to the user
+ * @param {string} payload Custom payload specified by the user
  */
-function formatResponses(responses) {
+function formatResponses(responses, payload) {
   const { Message } = protos.google.cloud.dialogflow.v2.Intent;
+  const messages = responses.map((pool) => new Message({ text: { text: pool } }));
 
-  return responses.map((pool) => new Message({ text: { text: pool } }));
+  try {
+    const payloadObj = JSON.parse(payload);
+    if (Object.keys(payloadObj).length !== 0) {
+      messages.push(new Message({ payload: { fields: payloadObj } }));
+    }
+  } catch (error) {
+    return messages;
+  }
+
+  return messages;
 }
 
 /**
@@ -147,6 +159,7 @@ function parse(intentNodes, contextNodes) {
       trainingPhrases,
       action,
       responses,
+      payload,
     } = node;
 
     return new Intent({
@@ -158,7 +171,7 @@ function parse(intentNodes, contextNodes) {
       trainingPhrases: formatTrainingPhrases(trainingPhrases),
       action,
       outputContexts: formatOutputContexts(node, contexts.out, contextMap),
-      messages: formatResponses(responses),
+      messages: formatResponses(responses, payload),
     });
   });
 }
