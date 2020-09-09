@@ -51,3 +51,5 @@ router.post('/graphs', (req, res, next) => {
     next(error);
   }
 });
+
+module.exports = { graphManagerRouter: router };

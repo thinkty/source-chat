@@ -13,8 +13,10 @@ const { Router } = require('express');
 const { handleGraph } = require('./flowManager/index');
 const { StateTable } = require('./stateTable');
 const { initializeAdapters, adapterRouter } = require('./adapters');
+const { graphManagerRouter } = require('./graphManager');
 
 const router = Router();
+router.use(graphManagerRouter);
 if (process.env.SLACK_BOT_TOKEN) {
   router.use(adapterRouter);
 }
