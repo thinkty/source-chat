@@ -1,6 +1,7 @@
-const logger = require('../../utils/logger');
 const { Router } = require('express');
+const logger = require('../../utils/logger');
 const { createGraph, getAllGraphs } = require('../../utils/db');
+
 const router = Router();
 
 /**
