@@ -1,4 +1,5 @@
 const { User } = require('../models/user');
+const { Graph } = require('../models/graph');
 const logger = require('./logger');
 
 /**
@@ -50,9 +51,29 @@ async function deleteUser(id) {
     });
 }
 
+/**
+ * Given a json graph, create a new graph document on the database.
+ *
+ * @param {object} graph Graph in json with nodes and edges
+ */
+async function createGraph(graph) {
+  const graphDoc = new Graph({ graph });
+  await graphDoc.save();
+}
+
+/**
+ * Retrieve all the graphs from the database and return it.
+ */
+async function getAllGraphs() {
+  const graphs = await Graph.find({}).exec();
+  return graphs;
+}
+
 module.exports = {
   createUser,
   retrieveUser,
   updateUser,
   deleteUser,
+  createGraph,
+  getAllGraphs,
 };
