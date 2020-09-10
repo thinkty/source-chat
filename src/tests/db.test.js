@@ -6,6 +6,8 @@ const {
   retrieveUser,
   updateUser,
   deleteUser,
+  createGraph,
+  getAllGraphs,
 } = require('../utils/db');
 
 describe('Testing CRUD for User model', () => {
@@ -56,5 +58,30 @@ describe('Testing CRUD for User model', () => {
 
   afterAll(async () => {
     await mongoose.connection.close();
+  });
+});
+
+describe('Testing for Graph model', () => {
+  const testingGraph = {
+    nodes: [],
+    edges: [],
+  };
+
+  beforeAll(async () => {
+    await mongoose.connect(process.env.DATABASE_URL, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
+    });
+  });
+
+  it('should create a graph document', async () => {
+    await createGraph(testingGraph);
+  });
+
+  it('should retrieve the graphs from the document', async () => {
+    const doc = await getAllGraphs();
+    expect(doc.length).toBeDefined();
   });
 });

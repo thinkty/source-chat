@@ -43,7 +43,7 @@ router.post('/graphs', (req, res, next) => {
     const { graph } = body;
 
     checkGraph(graph);
-    createGraph()
+    createGraph(graph)
       .then(() => {
         logger.info('Successfully saved graph');
         res.sendStatus(200);
