@@ -5,7 +5,7 @@ Source chat is a template server for managing intents on Dialogflow using the [D
 You can easily connect other chat platforms by adding your own platform adapters to handle receiving and sending messages.
 
 ## System Layout
-Source Chat can be divided into two parts:
+Source Chat can be divided into three parts:
 
 ### Editor
 The editor segment handles the interaction between the [Dialogflow Editor](https://github.com/thinkty/dialogflow-editor) and Source Chat server instance.
@@ -20,6 +20,10 @@ After Dialogflow has been successfully updated, the server will update its own s
 6. If any error is detected during the process, Dialogflow will send the error back to the server and the server will notify the client
 7. Once the intents have been added successfully, the server will update its own State Transition Table which manages the flow of the conversation
 8. If the process was successful, a 200 OK will be sent back to the client
+
+### Version Controller
+Compared to other components, the [version controller](https://github.com/thinkty/source-chat/tree/master/src/api/graphManager) does a simple job of keeping various versions of the graph.
+The API can be used to **create** a new graph and **get** all the graphs with the time of creation.
 
 ### Chatbot
 The chatbot segment handles the interaction between the message platform such as Slack or Discord and the server.
