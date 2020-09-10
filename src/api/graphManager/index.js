@@ -26,8 +26,13 @@ router.get('/graphs', (req, res, next) => {
   try {
     getAllGraphs()
       .then((documents) => {
-        console.log(documents);
-        // TODO: send the graphs as response
+        res.send(documents.map((document) => {
+          const { graph, createdAt } = document;
+          return {
+            graph,
+            time: createdAt,
+          };
+        }));
       });
   } catch (error) {
     next(error);
